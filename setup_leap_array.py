@@ -7,12 +7,19 @@ class year_cycle:
     SHORT_YEAR_DAYS = sum(MONTH_CYCLE_DAYS)
     LEAP_YEAR_DAYS = SHORT_YEAR_DAYS + 1
 
-class gregorian_patern_def:
-    SHORT_PATERN = [0,0,0,1]  # Leap year every 4 years
-    MID_PATERN = [1]*25       # Every 100 years, miss a leap year
-    MID_PATERN[24] = 0
-    LONG_PATERN = [0,0,0,1]   # Every 400 years, add a bonus leap year.
+class gregorian_cycle_def:
+    #In Gregorian Calandar, leap years happen in a 400 year cycle. setup by three paterns:
+    # 1) Quadrennial - Every 4 Years        (AKA "SHORT PATERN") - Leap year every 4 years
+    SHORT_PATERN = [0,0,0,1]
 
+    # 2) Centurial - Every 100 years        (AKA "MID PATERN")   - Every 100 years, miss a leap year
+    MID_PATERN = [1]*25
+    MID_PATERN[24] = 0
+
+    # 3) Quatercentenary - Every 400 years  (AKA "LONG PARTERN") - Every 400 years, add a bonus leap year.
+    LONG_PATERN = [0,0,0,1]
+
+    #All of these combine to make the "LONG CYCLE"
     YEARS_IN_CYCLE = len(SHORT_PATERN) * len(MID_PATERN) * len(LONG_PATERN)
     MONTHS_IN_CYCLE = YEARS_IN_CYCLE * year_cycle.MONTHS_IN_YEAR
 
@@ -23,9 +30,9 @@ class gregorian_patern_def:
     def define_gregorian_long_cycle(self):
         years_in_long_cycle = []
 
-        for century in gregorian_patern_def.LONG_PATERN:
-            for quadrennial in gregorian_patern_def.MID_PATERN:
-                for viewed_year in gregorian_patern_def.SHORT_PATERN:
+        for century in gregorian_cycle_def.LONG_PATERN:
+            for quadrennial in gregorian_cycle_def.MID_PATERN:
+                for viewed_year in gregorian_cycle_def.SHORT_PATERN:
                     if viewed_year == 1 and (quadrennial == 1 or century == 1):
                         years_in_long_cycle.append(1)
                     else:
@@ -38,12 +45,3 @@ class gregorian_patern_def:
         non_leap_days = years * year_cycle.SHORT_YEAR_DAYS
         leap_days = sum(self.LONG_CYCLE)
         return non_leap_days + leap_days
-        
-
-
-print(gregorian_patern_def.MONTHS_IN_CYCLE)
-
-cycle = gregorian_patern_def()
-print(cycle.LONG_PATERN)
-print(cycle.LONG_CYCLE)
-print(cycle.DAYS_IN_LONG_CYCLE)
