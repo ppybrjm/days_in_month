@@ -26,6 +26,7 @@ class gregorian_cycle_def:
     def __init__(self):
         self.LONG_CYCLE = self.define_gregorian_long_cycle()
         self.DAYS_IN_LONG_CYCLE = self.count_days_in_long_cycle()
+        self.LEAP_DAYS_IN_LONG_CYCLE = self.count_leap_days_in_long_cycle()
 
     def define_gregorian_long_cycle(self):
         years_in_long_cycle = []
@@ -45,3 +46,6 @@ class gregorian_cycle_def:
         non_leap_days = years * year_cycle.SHORT_YEAR_DAYS
         leap_days = sum(self.LONG_CYCLE)
         return non_leap_days + leap_days
+    
+    def count_leap_days_in_long_cycle(self):
+        return sum(self.LONG_CYCLE)
