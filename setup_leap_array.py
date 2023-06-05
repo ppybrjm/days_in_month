@@ -9,3 +9,14 @@ class gregorian_patern_def:
     MID_PATERN = [1]*25       # Every 100 years, miss a leap year
     MID_PATERN[24] = 0
     LONG_PATERN = [0,0,0,1]   # Every 400 years, add a bonus leap year.
+
+class defining_constants:
+    @staticmethod
+    def define_short_year(MONTH_CYCLE):
+        days = 0
+        for month in MONTH_CYCLE:
+            days += month if month != "A" else 28
+        return days
+
+    SHORT_YEAR = define_short_year(year_cycle.MONTH_CYCLE)
+    LEAP_YEAR = SHORT_YEAR+1
