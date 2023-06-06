@@ -1,4 +1,4 @@
-from setup_leap_array import year_cycle, gregorian_cycle_def
+from setup_leap_array import year_cycle
 
 def get_index(counter:int, length_of_array:int):
     return (counter)%length_of_array
@@ -72,7 +72,6 @@ def evaluating_possible_consecutive_sum_in_array(
 #         info = key.split("_")
 #         leap_year_info_1 = "   " if info[1] == "0" else "+1?"
 #         leap_year_info_2 = "" if info[1] == "0" else "[if Contained Feb is Leap Year]"
-
 #         print("{}{} days ({}/{} - ex:Starting in {}){}".format(
 #             info[0],
 #             leap_year_info_1,
@@ -83,33 +82,36 @@ def evaluating_possible_consecutive_sum_in_array(
 #         ))
 #     print()
 
-#Year Example
-gregorian_cycle = gregorian_cycle_def()
-for no_of_years in range(gregorian_cycle.YEARS_IN_CYCLE + 1):
-    totals, examples = evaluating_possible_consecutive_sum_in_array(gregorian_cycle.LONG_CYCLE, no_of_years)
-    print("For {} years:".format(no_of_years))
-    for key in totals:
-        print("{} leap days ({}/{} - ex:Starting in {})".format(
-            key,
-            totals[key],
-            gregorian_cycle.YEARS_IN_CYCLE,
-            examples[key] + 2001
-        ))
-    print()
 
-#Year Example with Look Ahead
-gregorian_cycle = gregorian_cycle_def()
-for no_of_years in range(gregorian_cycle.YEARS_IN_CYCLE + 1):
-    totals, examples = evaluating_possible_consecutive_sum_in_array(gregorian_cycle.LONG_CYCLE, no_of_years, False, True)
-    print("For {} years:".format(no_of_years))
-    for key in totals:
-        info = key.split("_")
-        next_year_info = "" if info[1] == "0" else " [Next Year contains leap year]"
-        print("{} leap days ({}/{} - ex:Starting in {}){}".format(
-            info[0],
-            totals[key],
-            gregorian_cycle.YEARS_IN_CYCLE,
-            examples[key] + 2001,
-            next_year_info
-        ))
-    print()
+# #Year Examples
+# from setup_leap_array import gregorian_cycle
+# gregorian_cycle = gregorian_cycle_def()
+
+# #Year Examples without Look Ahead
+# for no_of_years in range(gregorian_cycle.YEARS_IN_CYCLE + 1):
+#     totals, examples = evaluating_possible_consecutive_sum_in_array(gregorian_cycle.LONG_CYCLE, no_of_years)
+#     print("For {} years:".format(no_of_years))
+#     for key in totals:
+#         print("{} leap days ({}/{} - ex:Starting in {})".format(
+#             key,
+#             totals[key],
+#             gregorian_cycle.YEARS_IN_CYCLE,
+#             examples[key] + 2001
+#         ))
+#     print()
+
+# #Year Example with Look Ahead
+# for no_of_years in range(gregorian_cycle.YEARS_IN_CYCLE + 1):
+#     totals, examples = evaluating_possible_consecutive_sum_in_array(gregorian_cycle.LONG_CYCLE, no_of_years, False, True)
+#     print("For {} years:".format(no_of_years))
+#     for key in totals:
+#         info = key.split("_")
+#         next_year_info = "" if info[1] == "0" else " [Next Year contains leap year]"
+#         print("{} leap days ({}/{} - ex:Starting in {}){}".format(
+#             info[0],
+#             totals[key],
+#             gregorian_cycle.YEARS_IN_CYCLE,
+#             examples[key] + 2001,
+#             next_year_info
+#         ))
+#     print()
