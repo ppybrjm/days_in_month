@@ -26,6 +26,8 @@ class months_calc():
         plural_months = "" if self.number_of_months == 1 else "s"
         return("processing {} month{}".format(self.number_of_months, plural_months))
 
+    def process(self):
+        pass
 
 class years_months_calc(months_calc):
     def __init__(self, number_of_months):
@@ -44,6 +46,9 @@ class years_months_calc(months_calc):
             self.year_total_number, purual_years, 
             self.month_remainder_number, plural_months
             ))
+    
+    def process(self):
+        pass
 
 class long_cycle_months_calc(years_months_calc):
     def __init__(self, number_of_months):
@@ -66,14 +71,14 @@ class long_cycle_months_calc(years_months_calc):
         self.long_cycle_days = self.long_cycle_number*gregorian_cycle.DAYS_IN_CYCLE
         self.long_cycle_included_leap_days = self.long_cycle_number*gregorian_cycle.LEAP_DAYS_IN_CYCLE
 
-        self.long_cycle_string = "   In the first {} years, there were {} days, including {} leap years". format(
+        self.long_cycle_str = "   In the first {} years, there were {} days, including {} leap years". format(
                 self.long_cycle_years, self.long_cycle_days, self.long_cycle_included_leap_days
         )
 
     def __str__(self):
         self.processing_str = self.generate_processing_str()        
         self.process()        
-        return "{}\n{}".format(self.processing_str, self.long_cycle_string)
+        return "{}\n{}".format(self.processing_str, self.long_cycle_str)
 
 
 months_to_days(1)
