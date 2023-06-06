@@ -1,4 +1,4 @@
-from setup_leap_array import year_cycle
+from setup_leap_array import year_cycle, gregorian_cycle_def
 
 def get_index(counter:int, length_of_array:int):
     return (counter)%length_of_array
@@ -46,34 +46,48 @@ def evaluating_possible_consecutive_sum_in_array(
 
     return outcome_totals, examples
 
-#No Leap Month Check Example
-for no_of_months in range(13):
-    totals, examples = evaluating_possible_consecutive_sum_in_array(year_cycle.MONTH_CYCLE_DAYS, no_of_months)
-    print("For {} months:".format(no_of_months))
+# #No Leap Month Check Example
+# for no_of_months in range(13):
+#     totals, examples = evaluating_possible_consecutive_sum_in_array(year_cycle.MONTH_CYCLE_DAYS, no_of_months)
+#     print("For {} months:".format(no_of_months))
+#     for key in totals:
+#         print("{} days ({}/{} - ex:Starting in {})".format(
+#             key,
+#             totals[key],
+#             year_cycle.MONTHS_IN_YEAR,
+#             year_cycle.MONTH_CYCLE_NAMES[examples[key]]
+#         ))
+#     print()
+
+# #Leap Month Check Example
+# for no_of_months in range(13):
+#     totals, examples = evaluating_possible_consecutive_sum_in_array(year_cycle.MONTH_CYCLE_DAYS, no_of_months, True)
+#     print("For {} months:".format(no_of_months))
+#     for key in totals:
+#         info = key.split("_")
+#         leap_year_info_1 = "   " if info[1] == "0" else "+1?"
+#         leap_year_info_2 = "" if info[1] == "0" else "[if Contained Feb is Leap Year] "
+
+#         print("{}{} days ({}/{} - ex:Starting in {}){}".format(
+#             info[0],
+#             leap_year_info_1,
+#             totals[key],
+#             year_cycle.MONTHS_IN_YEAR,
+#             year_cycle.MONTH_CYCLE_NAMES[examples[key]],
+#             leap_year_info_2
+#         ))
+#     print()
+
+#Year Example
+gregorian_cycle = gregorian_cycle_def()
+for no_of_years in range(gregorian_cycle.YEARS_IN_CYCLE + 1):
+    totals, examples = evaluating_possible_consecutive_sum_in_array(gregorian_cycle.LONG_CYCLE, no_of_years)
+    print("For {} years:".format(no_of_years))
     for key in totals:
-        print("{} days ({}/{} - ex:Starting in {})".format(
+        print("{} leap days ({}/{} - ex:Starting in {})".format(
             key,
             totals[key],
-            year_cycle.MONTHS_IN_YEAR,
-            year_cycle.MONTH_CYCLE_NAMES[examples[key]]
-        ))
-    print()
-
-#Leap Month Check Example
-for no_of_months in range(13):
-    totals, examples = evaluating_possible_consecutive_sum_in_array(year_cycle.MONTH_CYCLE_DAYS, no_of_months, True)
-    print("For {} months:".format(no_of_months))
-    for key in totals:
-        info = key.split("_")
-        leap_year_info_1 = "   " if info[1] == "0" else "+1?"
-        leap_year_info_2 = "" if info[1] == "0" else "[if Contained Feb is Leap Year] "
-
-        print("{}{} days ({}/{} - ex:Starting in {}){}".format(
-            info[0],
-            leap_year_info_1,
-            totals[key],
-            year_cycle.MONTHS_IN_YEAR,
-            year_cycle.MONTH_CYCLE_NAMES[examples[key]],
-            leap_year_info_2
+            gregorian_cycle.YEARS_IN_CYCLE,
+            examples[key] + 2001
         ))
     print()
