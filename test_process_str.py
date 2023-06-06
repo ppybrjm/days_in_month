@@ -1,0 +1,51 @@
+from months_to_days import get_month_calc_object
+
+test_cases = [
+    {"months": 0, "process": "processing 0 months"},
+    {"months": 1, "process": "processing 1 month"},
+    {"months": 2, "process": "processing 2 months"},
+    {"months": 3, "process": "processing 3 months"},
+    {"months": 4, "process": "processing 4 months"},
+    {"months": 5, "process": "processing 5 months"},
+    {"months": 6, "process": "processing 6 months"},
+    {"months": 11, "process": "processing 11 months"},
+    {"months": 12, "process": "processing 12 months = 1 year 0 months"},
+    {"months": 13, "process": "processing 13 months = 1 year 1 month"},
+    {"months": 20, "process": "processing 20 months = 1 year 8 months"},
+    {"months": 24, "process": "processing 24 months = 2 years 0 months"},
+    {"months": 25, "process": "processing 25 months = 2 years 1 month"},
+    {"months": 30, "process": "processing 30 months = 2 years 6 months"},
+    {"months": 200,"process": "processing 200 months = 16 years 8 months"},
+    {"months": 204,"process": "processing 204 months = 17 years 0 months"},
+    {"months": 1199, "process": "processing 1199 months = 99 years 11 months"},
+    {"months": 1200, "process": "processing 1200 months = 100 years 0 months"},
+    {"months": 1201, "process": "processing 1201 months = 100 years 1 month"},
+    {"months": 1202, "process": "processing 1202 months = 100 years 2 months"},
+    {"months": 1212, "process": "processing 1212 months = 101 years 0 months"},
+    {"months": 1213, "process": "processing 1213 months = 101 years 1 month"},
+    {"months": 1214, "process": "processing 1214 months = 101 years 2 months"},
+    {"months": 2000, "process": "processing 2000 months = 166 years 8 months"},
+    {"months": 2004, "process": "processing 2004 months = 167 years 0 months"},
+    {"months": 3000, "process": "processing 3000 months = 250 years 0 months"},
+    {"months": 3001, "process": "processing 3001 months = 250 years 1 month"},
+    {"months": 3002, "process": "processing 3002 months = 250 years 2 months"},
+    {"months": 4799, "process": "processing 4799 months = 399 years 11 months"},
+    {"months": 4800, "process": "processing 4800 months = 400 years 0 months --> (1 long cycle of 400)"},
+    {"months": 4801, "process": "processing 4801 months = 400 years 1 month --> (1 long cycle of 400)"},
+    {"months": 4802, "process": "processing 4802 months = 400 years 2 months --> (1 long cycle of 400)"},
+    {"months": 4812, "process": "processing 4812 months = 401 years 0 months --> (1 long cycle of 400 + 1)"},
+    {"months": 4813, "process": "processing 4813 months = 401 years 1 month --> (1 long cycle of 400 + 1)"},
+    {"months": 4826, "process": "processing 4826 months = 402 years 2 months --> (1 long cycle of 400 + 2)"},
+    {"months": 6000, "process": "processing 6000 months = 500 years 0 months --> (1 long cycle of 400 + 100)"},
+    {"months": 19200, "process": "processing 19200 months = 1600 years 0 months --> (4 long cycles of 400)"},
+    {"months": 20000, "process": "processing 20000 months = 1666 years 8 months --> (4 long cycles of 400 + 66)"},
+    {"months": 21000, "process": "processing 21000 months = 1750 years 0 months --> (4 long cycles of 400 + 150)"},
+    {"months": 21001, "process": "processing 21001 months = 1750 years 1 month --> (4 long cycles of 400 + 150)"},
+    {"months": 30000000, "process": "processing 30000000 months = 2500000 years 0 months --> (6250 long cycles of 400)"},
+    {"months": 30001003, "process": "processing 30001003 months = 2500083 years 7 months --> (6250 long cycles of 400 + 83)"},
+    {"months": 30001008, "process": "processing 30001008 months = 2500084 years 0 months --> (6250 long cycles of 400 + 84)"}
+]
+
+for test in test_cases:
+        calc_object = get_month_calc_object(test["months"])
+        assert(calc_object.__str__() == test["process"])
