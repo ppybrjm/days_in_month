@@ -7,6 +7,7 @@ def evaluating_possible_consecutive_sum_in_array(
     given_array: list,
     check_consectutive_number: int,
     check_leap_month: bool = False,     #Does contain Leap Month
+    look_ahead_next:  bool = False,     #Does next year contain Leap Month
 ):
     outcome_totals = {}
     examples = {}
@@ -31,7 +32,11 @@ def evaluating_possible_consecutive_sum_in_array(
             if check_leap_month and k == year_cycle.LEAP_DAY_INDEX: feb_flag = True
         
         #Create output_key
-        if check_leap_month:
+        if look_ahead_next:
+            next_k = get_index(k+1,len(given_array))
+            next_leap = given_array[next_k]
+            out_key = "{}_{}".format(sum_total, next_leap)
+        elif check_leap_month:
             feb_int = 1 if feb_flag else 0
             out_key = "{}_{}".format(sum_total, feb_int)
         else:
@@ -66,7 +71,7 @@ def evaluating_possible_consecutive_sum_in_array(
 #     for key in totals:
 #         info = key.split("_")
 #         leap_year_info_1 = "   " if info[1] == "0" else "+1?"
-#         leap_year_info_2 = "" if info[1] == "0" else "[if Contained Feb is Leap Year] "
+#         leap_year_info_2 = "" if info[1] == "0" else "[if Contained Feb is Leap Year]"
 
 #         print("{}{} days ({}/{} - ex:Starting in {}){}".format(
 #             info[0],
@@ -89,5 +94,22 @@ for no_of_years in range(gregorian_cycle.YEARS_IN_CYCLE + 1):
             totals[key],
             gregorian_cycle.YEARS_IN_CYCLE,
             examples[key] + 2001
+        ))
+    print()
+
+#Year Example with Look Ahead
+gregorian_cycle = gregorian_cycle_def()
+for no_of_years in range(gregorian_cycle.YEARS_IN_CYCLE + 1):
+    totals, examples = evaluating_possible_consecutive_sum_in_array(gregorian_cycle.LONG_CYCLE, no_of_years, False, True)
+    print("For {} years:".format(no_of_years))
+    for key in totals:
+        info = key.split("_")
+        next_year_info = "" if info[1] == "0" else " [Next Year contains leap year]"
+        print("{} leap days ({}/{} - ex:Starting in {}){}".format(
+            info[0],
+            totals[key],
+            gregorian_cycle.YEARS_IN_CYCLE,
+            examples[key] + 2001,
+            next_year_info
         ))
     print()
