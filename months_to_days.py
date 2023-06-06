@@ -1,17 +1,18 @@
 from setup_leap_array import year_cycle, gregorian_cycle_def
 
-def months_to_days(number_of_months: int):
-    months_calculater = object
-    if number_of_months >= gregorian_cycle_def.MONTHS_IN_CYCLE:
-        months_calculater = long_cycle_months_calc(number_of_months)
-    
-    elif number_of_months >=  year_cycle.MONTHS_IN_YEAR:
-        months_calculater = years_months_calc(number_of_months)
-    
-    else:
-        months_calculater = months_calc(number_of_months)
 
-    print(months_calculater)
+def months_to_days(number_of_months: int):
+    month_calculater = get_month_calc_object(number_of_months)
+    print(month_calculater)
+
+def get_month_calc_object(number_of_months: int):
+    if number_of_months >= gregorian_cycle_def.MONTHS_IN_CYCLE:
+        return long_cycle_months_calc(number_of_months)
+    elif number_of_months >=  year_cycle.MONTHS_IN_YEAR:
+        return years_months_calc(number_of_months)
+    else:
+        return months_calc(number_of_months)
+
 
 class months_calc():
     def __init__(self, number_of_months: int):
