@@ -60,6 +60,22 @@ class long_cycle_months_calc(years_months_calc):
             parent_str, self.long_cycle_number, plural_cycles, year_remainder_str
         ))
 
+    def process(self):
+        gregorian_cycle = gregorian_cycle_def()
+        self.long_cycle_years = self.long_cycle_number*gregorian_cycle_def.YEARS_IN_CYCLE
+        self.long_cycle_days = self.long_cycle_number*gregorian_cycle.DAYS_IN_CYCLE
+        self.long_cycle_included_leap_days = self.long_cycle_number*gregorian_cycle.LEAP_DAYS_IN_CYCLE
+
+        self.long_cycle_string = "   In the first {} years, there were {} days, including {} leap years". format(
+                self.long_cycle_years, self.long_cycle_days, self.long_cycle_included_leap_days
+        )
+
+    def __str__(self):
+        self.processing_str = self.generate_processing_str()        
+        self.process()        
+        return "{}\n{}".format(self.processing_str, self.long_cycle_string)
+
+
 months_to_days(1)
 months_to_days(2)
 months_to_days(123)
