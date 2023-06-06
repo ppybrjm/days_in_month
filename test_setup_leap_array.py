@@ -2,8 +2,8 @@ from setup_leap_array import gregorian_cycle_def, year_cycle
 
 long_cycle = gregorian_cycle_def()
 
-assert long_cycle.DAYS_IN_LONG_CYCLE == 146097
-assert long_cycle.LEAP_DAYS_IN_LONG_CYCLE == 97
+assert long_cycle.DAYS_IN_CYCLE == 146097
+assert long_cycle.LEAP_DAYS_IN_CYCLE == 97
 assert long_cycle.MONTHS_IN_CYCLE == 4800
 assert long_cycle.YEARS_IN_CYCLE == 400
 

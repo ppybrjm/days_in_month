@@ -10,30 +10,30 @@ class year_cycle:
 class gregorian_cycle_def:
     #In Gregorian Calandar, leap years happen in a 400 year cycle. setup by three paterns:
     # 1) Quadrennial - Every 4 Years        (AKA "SHORT PATERN") - Leap year every 4 years
-    SHORT_PATERN = [0,0,0,1]
+    CYCLE_SHORT_PATERN = [0,0,0,1]
 
     # 2) Centurial - Every 100 years        (AKA "MID PATERN")   - Every 100 years, miss a leap year
-    MID_PATERN = [1]*25
-    MID_PATERN[24] = 0
+    CYCLE_MID_PATERN = [1]*25
+    CYCLE_MID_PATERN[24] = 0
 
     # 3) Quatercentenary - Every 400 years  (AKA "LONG PARTERN") - Every 400 years, add a bonus leap year.
-    LONG_PATERN = [0,0,0,1]
+    CYCLE_LONG_PATERN = [0,0,0,1]
 
     #All of these combine to make the "LONG CYCLE"
-    YEARS_IN_CYCLE = len(SHORT_PATERN) * len(MID_PATERN) * len(LONG_PATERN)
+    YEARS_IN_CYCLE = len(CYCLE_SHORT_PATERN) * len(CYCLE_MID_PATERN) * len(CYCLE_LONG_PATERN)
     MONTHS_IN_CYCLE = YEARS_IN_CYCLE * year_cycle.MONTHS_IN_YEAR
 
     def __init__(self):
         self.LONG_CYCLE = self.define_gregorian_long_cycle()
-        self.DAYS_IN_LONG_CYCLE = self.count_days_in_long_cycle()
-        self.LEAP_DAYS_IN_LONG_CYCLE = self.count_leap_days_in_long_cycle()
+        self.DAYS_IN_CYCLE = self.count_days_in_long_cycle()
+        self.LEAP_DAYS_IN_CYCLE = self.count_leap_days_in_long_cycle()
 
     def define_gregorian_long_cycle(self):
         years_in_long_cycle = []
 
-        for century in gregorian_cycle_def.LONG_PATERN:
-            for quadrennial in gregorian_cycle_def.MID_PATERN:
-                for viewed_year in gregorian_cycle_def.SHORT_PATERN:
+        for century in gregorian_cycle_def.CYCLE_LONG_PATERN:
+            for quadrennial in gregorian_cycle_def.CYCLE_MID_PATERN:
+                for viewed_year in gregorian_cycle_def.CYCLE_SHORT_PATERN:
                     if viewed_year == 1 and (quadrennial == 1 or century == 1):
                         years_in_long_cycle.append(1)
                     else:
