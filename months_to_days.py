@@ -19,6 +19,10 @@ class months_calc():
         self.number_of_months = number_of_months
 
     def __str__(self):
+        self.processing_str = self.generate_processing_str()        
+        return "{}".format(self.processing_str)
+
+    def generate_processing_str(self):
         plural_months = "" if self.number_of_months == 1 else "s"
         return("processing {} month{}".format(self.number_of_months, plural_months))
 
@@ -29,9 +33,8 @@ class years_months_calc(months_calc):
         self.year_total_number = self.number_of_months // year_cycle.MONTHS_IN_YEAR
         self.month_remainder_number = self.number_of_months % year_cycle.MONTHS_IN_YEAR
 
-
-    def __str__(self):
-        parent_str = super().__str__()
+    def generate_processing_str(self):
+        parent_str = super().generate_processing_str()
 
         purual_years = "" if self.year_total_number == 1 else "s"
         plural_months = "" if self.month_remainder_number == 1 else "s"
@@ -48,8 +51,8 @@ class long_cycle_months_calc(years_months_calc):
         self.long_cycle_number = self.year_total_number // gregorian_cycle_def.YEARS_IN_CYCLE
         self.year_remainder_number = self.year_total_number % gregorian_cycle_def.YEARS_IN_CYCLE
 
-    def __str__(self):
-        parent_str = super().__str__()
+    def generate_processing_str(self):
+        parent_str = super().generate_processing_str()
         plural_cycles = "" if self.long_cycle_number == 1 else "s"
         year_remainder_str = "" if self.year_remainder_number == 0 else " + {}".format(self.year_remainder_number)
 
