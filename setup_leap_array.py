@@ -3,9 +3,12 @@ class year_cycle:
     MONTH_CYCLE_DAYS = [31,28,31,30,31,30,31,31,30,31,30,31]
     LEAP_DAY_INDEX = 1 #Leap Day in Feb
 
+    MONTH_CYCLE_DAYS_LEAP = MONTH_CYCLE_DAYS.copy()
+    MONTH_CYCLE_DAYS_LEAP[LEAP_DAY_INDEX] += 1
+
     MONTHS_IN_YEAR = len(MONTH_CYCLE_NAMES)
     SHORT_YEAR_DAYS = sum(MONTH_CYCLE_DAYS)
-    LEAP_YEAR_DAYS = SHORT_YEAR_DAYS + 1
+    LEAP_YEAR_DAYS = sum(MONTH_CYCLE_DAYS_LEAP)
 
 class gregorian_cycle_def:
     #In Gregorian Calandar, leap years happen in a 400 year cycle. setup by three paterns:
