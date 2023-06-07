@@ -17,13 +17,10 @@ def get_month_calc_object(number_of_months: int, get_details: bool):
 
 class months_calc():
     def __init__(self, number_of_months: int, get_details: bool = False):
-        self.number_of_months = number_of_months
-        self.get_details = get_details
+        self.setup_month_initial(number_of_months, get_details)
 
     def __str__(self):
-        self.processing_str = self.generate_processing_str()
-        self.process_months(self.number_of_months)
-        
+        self.processing_str = self.generate_processing_str()        
         out_str = "{} - {}".format(self.processing_str, self.min_max_str)
         if self.get_details:
             for outcome in self.possible_outcomes_details:
@@ -32,8 +29,14 @@ class months_calc():
         return out_str
 
     def generate_processing_str(self):
-        plural_months = "" if self.number_of_months == 1 else "s"
-        return("processing {} month{}".format(self.number_of_months, plural_months))
+        plural_months = "" if self.total_of_months == 1 else "s"
+        return("processing {} month{}".format(self.total_of_months, plural_months))
+
+    def setup_month_initial(self, number_of_months: int, get_details: bool = False):
+        self.get_details = get_details
+        self.total_of_months = number_of_months
+        self.evaluate_months = number_of_months % year_cycle.MONTHS_IN_YEAR
+        self.process_months(self.evaluate_months)
 
     def process_months(self, months):
         totals, examples = evaluating_possible_consecutive_sum_in_array(
@@ -77,23 +80,25 @@ class months_calc():
 class years_months_calc(months_calc):
     def __init__(self, number_of_months):
         super().__init__(number_of_months)
-        self.year_total_number = self.number_of_months // year_cycle.MONTHS_IN_YEAR
-        self.month_remainder_number = self.number_of_months % year_cycle.MONTHS_IN_YEAR
+        self.setup_year_initial()
 
     def __str__(self):
         self.processing_str = self.generate_processing_str()
         return "{}".format(self.processing_str)
 
+    def setup_year_initial(self):
+        self.year_total_number = self.total_of_months // year_cycle.MONTHS_IN_YEAR
+
     def generate_processing_str(self):
         parent_str = super().generate_processing_str()
 
         purual_years = "" if self.year_total_number == 1 else "s"
-        plural_months = "" if self.month_remainder_number == 1 else "s"
+        plural_months = "" if self.evaluate_months == 1 else "s"
 
         return("{} = {} year{} {} month{}".format(
             parent_str,
             self.year_total_number, purual_years, 
-            self.month_remainder_number, plural_months
+            self.evaluate_months, plural_months
             ))
     
     def process(self):
@@ -102,8 +107,8 @@ class years_months_calc(months_calc):
 class long_cycle_months_calc(years_months_calc):
     def __init__(self, number_of_months):
         super().__init__(number_of_months)
-        self.long_cycle_number = self.year_total_number // gregorian_cycle_def.YEARS_IN_CYCLE
-        self.year_remainder_number = self.year_total_number % gregorian_cycle_def.YEARS_IN_CYCLE
+        self.setup_long_cycle_initial()
+        self.process()
 
     def generate_processing_str(self):
         parent_str = super().generate_processing_str()
@@ -113,6 +118,10 @@ class long_cycle_months_calc(years_months_calc):
         return("{} --> ({} long cycle{} of 400{})".format(
             parent_str, self.long_cycle_number, plural_cycles, year_remainder_str
         ))
+
+    def setup_long_cycle_initial(self):
+        self.long_cycle_number = self.year_total_number // gregorian_cycle_def.YEARS_IN_CYCLE
+        self.year_remainder_number = self.year_total_number % gregorian_cycle_def.YEARS_IN_CYCLE
 
     def process(self):
         gregorian_cycle = gregorian_cycle_def()
@@ -126,7 +135,6 @@ class long_cycle_months_calc(years_months_calc):
 
     def __str__(self):
         self.processing_str = self.generate_processing_str()
-        self.process()
         return "{}\n{}".format(self.processing_str, self.long_cycle_str)
 
 
