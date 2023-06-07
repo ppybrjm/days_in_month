@@ -1,5 +1,6 @@
 from setup_leap_array import year_cycle, gregorian_cycle_def
-
+from utils import evaluating_possible_consecutive_sum_in_array
+import collections
 
 def months_to_days(number_of_months: int):
     month_calculater = get_month_calc_object(number_of_months)
@@ -19,21 +20,62 @@ class months_calc():
         self.number_of_months = number_of_months
 
     def __str__(self):
-        self.processing_str = self.generate_processing_str()        
-        return "{}".format(self.processing_str)
+        self.processing_str = self.generate_processing_str()
+        self.process_months(self.number_of_months)
+        
+        return "{} - {}".format(self.processing_str, self.min_max_str)
 
     def generate_processing_str(self):
         plural_months = "" if self.number_of_months == 1 else "s"
         return("processing {} month{}".format(self.number_of_months, plural_months))
 
-    def process(self):
-        pass
+    def process_months(self, months):
+        totals, examples = evaluating_possible_consecutive_sum_in_array(
+            year_cycle.MONTH_CYCLE_DAYS, 
+            months,
+            True
+        )
+        ordered_totals = collections.OrderedDict(sorted(totals.items()))
+        first_item = next(iter(ordered_totals.items()))[0]
+        last_last = next(reversed(ordered_totals.items()))[0]
+
+        day_minumum = first_item.split("_")[0]
+        day_maximum = last_last.split("_")[0]
+
+        self.min_max_str = "Answer between {}-{}".format(
+            day_minumum, day_maximum
+        )
+
+        self.possible_outcomes_details = []
+        for key in ordered_totals:
+            info = key.split("_")
+            outcome_str = "{} days ({}/{} - ex:Starting in {})".format(
+                    info[0],
+                    totals[key],
+                    year_cycle.MONTHS_IN_YEAR,
+                    year_cycle.MONTH_CYCLE_NAMES[examples[key]]
+            )
+            self.possible_outcomes_details.append(outcome_str)
+
+            if info[1] == "1":
+                outcome_str = "{} days ({}*/{} - ex:Starting in {} with Leap)".format(
+                    int(info[0]) + 1,
+                    totals[key],
+                    year_cycle.MONTHS_IN_YEAR,
+                    year_cycle.MONTH_CYCLE_NAMES[examples[key]]
+                )
+                self.possible_outcomes_details.append(outcome_str)
+
 
 class years_months_calc(months_calc):
     def __init__(self, number_of_months):
         super().__init__(number_of_months)
         self.year_total_number = self.number_of_months // year_cycle.MONTHS_IN_YEAR
         self.month_remainder_number = self.number_of_months % year_cycle.MONTHS_IN_YEAR
+
+    def __str__(self):
+        self.processing_str = self.generate_processing_str()
+        return "{}".format(self.processing_str)
 
     def generate_processing_str(self):
         parent_str = super().generate_processing_str()
@@ -76,8 +118,8 @@ class long_cycle_months_calc(years_months_calc):
         )
 
     def __str__(self):
-        self.processing_str = self.generate_processing_str()        
-        self.process()        
+        self.processing_str = self.generate_processing_str()
+        self.process()
         return "{}\n{}".format(self.processing_str, self.long_cycle_str)
 
 
