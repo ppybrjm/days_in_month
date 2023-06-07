@@ -34,18 +34,8 @@ class months_calc():
         self.process_months()
 
     def process_months(self):
-        if self.year_is_leap == YEAR_IS_LEAP.DEFINATE_LEAP_YEAR:
-            evaluate_leap_year = False
-            months_cycle_days = year_cycle.MONTH_CYCLE_DAYS
-        elif self.year_is_leap == YEAR_IS_LEAP.DEFINATE_NOT_LEAP_YEAR:
-            evaluate_leap_year = False
-            months_cycle_days = year_cycle.MONTH_CYCLE_DAYS.copy()
-            months_cycle_days[year_cycle.LEAP_DAY_INDEX] += 1
-        elif self.year_is_leap == YEAR_IS_LEAP.UNKNOWN_IF_LEAP_YEAR:
-            evaluate_leap_year = self.get_details
-            months_cycle_days = year_cycle.MONTH_CYCLE_DAYS
-        else:
-            raise "Leap Year needs to be 1, 0, -1"
+        evaluate_leap_year = True if YEAR_IS_LEAP.UNKNOWN_IF_LEAP_YEAR else False
+        months_cycle_days = year_cycle.MONTH_CYCLE_DAYS_LEAP if YEAR_IS_LEAP.DEFINATE_LEAP_YEAR else year_cycle.MONTH_CYCLE_DAYS
 
         totals, examples = evaluating_possible_consecutive_sum_in_array(
             months_cycle_days,
