@@ -16,9 +16,8 @@ test_cases = [
 ]
 
 for test in test_cases:
-        calc_object = get_month_calc_object(test["months"])
-        calc_object.process()
-        if test["long_cycle"] is None:
-            assert(not hasattr(calc_object,"long_cycle_str"))
-        else:
-            assert(calc_object.long_cycle_str == test["long_cycle"])
+    calc_object = get_month_calc_object(test["months"])
+    if test["long_cycle"] is None:
+        assert(not hasattr(calc_object,"long_cycle_str"))
+    else:
+        assert(calc_object.long_cycle_str == test["long_cycle"])
