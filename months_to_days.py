@@ -59,9 +59,12 @@ class months_calc():
         day_minumum = first_item.split("_")[0] if evaluate_leap_year else first_item
         day_maximum = last_last.split("_")[0] if evaluate_leap_year else last_last
 
-        self.min_max_str = "Answer between {}-{} days".format(
-            day_minumum, day_maximum
-        )
+        if day_minumum == day_maximum:
+            self.min_max_str = "Answer is {} days".format(day_minumum)
+        else:
+            self.min_max_str = "Answer between {}-{} days".format(
+                day_minumum, day_maximum
+            )
 
         if self.get_details:
             self.possible_outcomes_details = []

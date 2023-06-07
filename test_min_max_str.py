@@ -1,7 +1,7 @@
 from months_to_days import get_month_calc_object
 
 test_cases = [
-    {"months": 0, "min_max_str": "Answer between 0-0 days"},
+    {"months": 0, "min_max_str": "Answer is 0 days"},
     {"months": 1, "min_max_str": "Answer between 28-31 days"},
     {"months": 2, "min_max_str": "Answer between 59-62 days"},
     {"months": 3, "min_max_str": "Answer between 89-92 days"},
