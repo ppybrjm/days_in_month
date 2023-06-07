@@ -1,4 +1,5 @@
 from setup_leap_array import year_cycle
+import collections
 
 def get_index(counter:int, length_of_array:int):
     return (counter)%length_of_array
@@ -48,8 +49,9 @@ def evaluating_possible_consecutive_sum_in_array(
             examples[out_key] = i
 
         outcome_totals[out_key] += 1
+        ordered_outcome_totals = collections.OrderedDict(sorted(outcome_totals.items()))
 
-    return outcome_totals, examples
+    return ordered_outcome_totals, examples
 
 # #No Leap Month Check Example
 # for no_of_months in range(13):

@@ -1,6 +1,5 @@
 from setup_leap_array import year_cycle, gregorian_cycle_def
 from utils import evaluating_possible_consecutive_sum_in_array
-import collections
 
 class YEAR_IS_LEAP:
     DEFINATE_NOT_LEAP_YEAR = -1
@@ -37,7 +36,7 @@ class months_calc():
         evaluate_leap_year = True if (self.year_is_leap == YEAR_IS_LEAP.UNKNOWN_IF_LEAP_YEAR) else False
         months_cycle_days = year_cycle.MONTH_CYCLE_DAYS_LEAP if (self.year_is_leap == YEAR_IS_LEAP.DEFINATE_LEAP_YEAR) else year_cycle.MONTH_CYCLE_DAYS
 
-        totals, examples = evaluating_possible_consecutive_sum_in_array(
+        ordered_totals, examples = evaluating_possible_consecutive_sum_in_array(
             months_cycle_days,
             self.evaluate_months,
             evaluate_leap_year
@@ -55,7 +54,7 @@ class months_calc():
             self.min_max_str = "Answer between {}-{} days".format(
                 day_minumum, day_maximum
             )
-
+            
         if self.get_details:
             self.get_details_list(ordered_totals, examples)
     
