@@ -2,43 +2,64 @@ from setup_leap_array import year_cycle, gregorian_cycle_def
 from utils import evaluating_possible_consecutive_sum_in_array
 import collections
 
+class YEAR_IS_LEAP:
+    DEFINATE_NOT_LEAP_YEAR = -1
+    UNKNOWN_IF_LEAP_YEAR = 0
+    DEFINATE_LEAP_YEAR = 1
+
 def months_to_days(number_of_months: int, get_details: bool = False):
     month_calculater = get_month_calc_object(number_of_months, get_details)
     print(month_calculater)
 
-def get_month_calc_object(number_of_months: int, get_details: bool):
+def get_month_calc_object(number_of_months: int, get_details: bool = False):
     if number_of_months >= gregorian_cycle_def.MONTHS_IN_CYCLE:
         return long_cycle_months_calc(number_of_months)
+
     elif number_of_months >=  year_cycle.MONTHS_IN_YEAR:
         return years_months_calc(number_of_months)
+
     else:
-        return months_calc(number_of_months, get_details)
+        return months_calc(number_of_months, YEAR_IS_LEAP.UNKNOWN_IF_LEAP_YEAR, get_details)
 
 
 class months_calc():
-    def __init__(self, number_of_months: int, get_details: bool = False):
-        self.setup_month_initial(number_of_months, get_details)
+    def __init__(self, number_of_months: int, year_is_leap: int, get_details: bool = False):
+        self.setup_month_initial(number_of_months, year_is_leap, get_details)
 
-    def setup_month_initial(self, number_of_months: int, get_details: bool = False):
+    def setup_month_initial(self, number_of_months: int, year_is_leap: int, get_details: bool = False):
         self.get_details = get_details
         self.total_of_months = number_of_months
         self.evaluate_months = number_of_months % year_cycle.MONTHS_IN_YEAR
-        self.process_months(self.evaluate_months)
+        self.year_is_leap = year_is_leap
+        self.process_months()
 
-    def process_months(self, months):
+    def process_months(self):
+        if self.year_is_leap == YEAR_IS_LEAP.DEFINATE_LEAP_YEAR:
+            evaluate_leap_year = False
+            months_cycle_days = year_cycle.MONTH_CYCLE_DAYS
+        elif self.year_is_leap == YEAR_IS_LEAP.DEFINATE_NOT_LEAP_YEAR:
+            evaluate_leap_year = False
+            months_cycle_days = year_cycle.MONTH_CYCLE_DAYS.copy()
+            months_cycle_days[year_cycle.LEAP_DAY_INDEX] += 1
+        elif self.year_is_leap == YEAR_IS_LEAP.UNKNOWN_IF_LEAP_YEAR:
+            evaluate_leap_year = self.get_details
+            months_cycle_days = year_cycle.MONTH_CYCLE_DAYS
+        else:
+            raise "Leap Year needs to be 1, 0, -1"
+
         totals, examples = evaluating_possible_consecutive_sum_in_array(
-            year_cycle.MONTH_CYCLE_DAYS, 
-            months,
-            self.get_details
+            months_cycle_days,
+            self.evaluate_months,
+            evaluate_leap_year
         )
         ordered_totals = collections.OrderedDict(sorted(totals.items()))
         first_item = next(iter(ordered_totals.items()))[0]
         last_last = next(reversed(ordered_totals.items()))[0]
 
-        day_minumum = first_item.split("_")[0] if self.get_details else first_item
-        day_maximum = last_last.split("_")[0] if self.get_details else last_last
+        day_minumum = first_item.split("_")[0] if evaluate_leap_year else first_item
+        day_maximum = last_last.split("_")[0] if evaluate_leap_year else last_last
 
-        self.min_max_str = "Answer between {}-{}".format(
+        self.min_max_str = "Answer between {}-{} days".format(
             day_minumum, day_maximum
         )
 
@@ -66,6 +87,7 @@ class months_calc():
     def __str__(self):
         self.processing_str = self.generate_processing_str()        
         out_str = "{} - {}".format(self.processing_str, self.min_max_str)
+        
         if self.get_details:
             for outcome in self.possible_outcomes_details:
                 out_str += ("\n    {}").format(outcome)
@@ -79,7 +101,7 @@ class months_calc():
 
 class years_months_calc(months_calc):
     def __init__(self, number_of_months):
-        super().__init__(number_of_months)
+        super().__init__(number_of_months, YEAR_IS_LEAP.UNKNOWN_IF_LEAP_YEAR)
         self.setup_year_initial()
 
     def setup_year_initial(self):
