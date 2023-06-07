@@ -41,7 +41,6 @@ class months_calc():
             self.evaluate_months,
             evaluate_leap_year
         )
-        ordered_totals = collections.OrderedDict(sorted(totals.items()))
         first_item = next(iter(ordered_totals.items()))[0]
         last_last = next(reversed(ordered_totals.items()))[0]
 
