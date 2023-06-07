@@ -57,25 +57,36 @@ class months_calc():
             )
 
         if self.get_details:
-            self.possible_outcomes_details = []
-            for key in ordered_totals:
-                info = key.split("_")
-                outcome_str = "{} days ({}/{} - ex:Starting in {})".format(
-                        info[0],
-                        totals[key],
-                        year_cycle.MONTHS_IN_YEAR,
-                        year_cycle.MONTH_CYCLE_NAMES[examples[key]]
-                )
-                self.possible_outcomes_details.append(outcome_str)
+            self.get_details_list(ordered_totals, examples)
+    
+    def get_details_list(self, ordered_totals, examples):
+        if not self.get_details: return
 
-                if info[1] == "1":
-                    outcome_str = "{} days ({}*/{} - ex:Starting in {} with Leap)".format(
-                        int(info[0]) + 1,
-                        totals[key],
-                        year_cycle.MONTHS_IN_YEAR,
-                        year_cycle.MONTH_CYCLE_NAMES[examples[key]]
-                    )
-                    self.possible_outcomes_details.append(outcome_str)
+        self.possible_outcomes_details = []
+        for key in ordered_totals:
+            self.append_detail(key, ordered_totals, examples, add_leap_day=False)
+            
+            #Do we need to add an attitional options for Leap Days
+            info = key.split("_")
+            if info[1] == "1":
+                self.append_detail(key, ordered_totals, examples, add_leap_day=True)
+
+
+    def append_detail(self, key, ordered_totals, examples, add_leap_day: bool):
+        info = key.split("_")
+        leap_star = "*" if add_leap_day else ""
+        with_leap_str = " with Leap" if add_leap_day else ""
+
+        outcome_str = "{} days ({}{}/{} - ex:Starting in {}{})".format(
+            info[0], #Number of Days
+            ordered_totals[key], #Total Probablity
+            leap_star, #* for leap years
+            year_cycle.MONTHS_IN_YEAR,  #12
+            year_cycle.MONTH_CYCLE_NAMES[examples[key]], #JAN
+            with_leap_str # "with Leap" for leap years
+        )
+        self.possible_outcomes_details.append(outcome_str)
+
 
     def __str__(self):
         self.processing_str = self.generate_processing_str()        
