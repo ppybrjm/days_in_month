@@ -84,10 +84,10 @@ def evaluating_possible_consecutive_sum_in_array(
 
 
 # #Year Examples
-# from setup_leap_array import gregorian_cycle
+# from setup_leap_array import gregorian_cycle_def
 # gregorian_cycle = gregorian_cycle_def()
 
-# #Year Examples without Look Ahead
+# # #Year Examples without Look Ahead
 # for no_of_years in range(gregorian_cycle.YEARS_IN_CYCLE + 1):
 #     totals, examples = evaluating_possible_consecutive_sum_in_array(gregorian_cycle.LONG_CYCLE, no_of_years)
 #     print("For {} years:".format(no_of_years))
@@ -100,7 +100,7 @@ def evaluating_possible_consecutive_sum_in_array(
 #         ))
 #     print()
 
-# #Year Example with Look Ahead
+# # #Year Example with Look Ahead
 # for no_of_years in range(gregorian_cycle.YEARS_IN_CYCLE + 1):
 #     totals, examples = evaluating_possible_consecutive_sum_in_array(gregorian_cycle.LONG_CYCLE, no_of_years, False, True)
 #     print("For {} years:".format(no_of_years))
