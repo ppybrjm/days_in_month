@@ -41,6 +41,12 @@ class months_calc():
             self.evaluate_months,
             evaluate_leap_year
         )
+        self.generate_min_max_month_str(ordered_totals, evaluate_leap_year)
+
+        if self.get_details:
+            self.get_details_list(ordered_totals, examples)
+
+    def generate_min_max_month_str(self, ordered_totals, evaluate_leap_year):
         first_item = next(iter(ordered_totals.items()))[0]
         last_last = next(reversed(ordered_totals.items()))[0]
 
@@ -53,9 +59,6 @@ class months_calc():
             self.min_max_str = "Answer between {}-{} days".format(
                 day_minumum, day_maximum
             )
-            
-        if self.get_details:
-            self.get_details_list(ordered_totals, examples)
     
     def get_details_list(self, ordered_totals, examples):
         if not self.get_details: return
