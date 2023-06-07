@@ -47,5 +47,5 @@ test_cases = [
 ]
 
 for test in test_cases:
-        calc_object = get_month_calc_object(test["months"])
-        assert(calc_object.generate_processing_str() == test["process"])
+    calc_object = get_month_calc_object(test["months"])
+    assert(calc_object.generate_processing_str() == test["process"])
